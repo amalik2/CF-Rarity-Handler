@@ -4,45 +4,44 @@
 
 int main() {
 
-	int elements = 10;
+	int elements = 5;
 	int tries = 1000;
 
 	RarityHandler<double> rh;
 
-	std::vector<double> elementStorage(elements);
-	std::vector<double*> elementPtrs(elements);
+	std::vector<double> elementList;
 	std::vector<int> rarities;
 	
-	std::vector<int> counts(elements);
+	float counts[100];
 	for (int i = 1; i <= elements; i++) {
-		elementStorage[i - 1] = i;
-		elementPtrs[i - 1] = &elementStorage[i - 1];
+		elementList.push_back(i);
 		rarities.push_back(i);
 		counts[i - 1] = 0;
 	}
 
-	rh.addList(elementPtrs, rarities);
+	rh.addList(elementList, rarities);
 
 	for (int x = 0; x < tries; x++) {
-		int idx = *rh.selectRandomObject();
-		counts[idx - 1]++;
+		int idx = rh.selectRandomObject();
+		counts[idx]++;
 	}
 
-	std::cout << "1: " << (counts[0] / (float)tries) * 100 << " 5: " << 100 * counts[elements - 1] / (float)tries << std::endl;
+	std::cout << "1: " << (counts[1] / tries) * 100 << " 5: " << 100 * counts[4] / tries << std::endl;
 
 	rh.clear();
 
 	for (int i = 1; i <= elements; i++) {
-		rh.addObject(elementStorage[i - 1], i);
+		double value = i;
+		rh.addObject(value, i);
 		counts[i - 1] = 0;
 	}
 
 	for (int x = 0; x < tries; x++) {
-		int idx = *rh.selectRandomObject();
-		counts[idx - 1]++;
+		int idx = rh.selectRandomObject();
+		counts[idx]++;
 	}
 
-	std::cout << "1: " << (counts[0] / (float)tries) * 100 << " 5: " << 100 * counts[elements - 1] / (float)tries << std::endl;
+	std::cout << "1: " << (counts[1] / tries) * 100 << " 5: " << 100 * counts[4] / tries << std::endl;
 
 	return 0;
 }
