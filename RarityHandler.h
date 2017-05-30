@@ -11,7 +11,7 @@ class RarityHandler
 
 private:
 	std::vector<int> rarities;
-	std::vector<T> objects;
+	std::vector<T*> objects;
 
 	// Get the sum of the rarities
 	int getSum() {
@@ -27,11 +27,11 @@ public:
 	// Add a new object to the list, by specifying the new element's rarity
 	void addObject(T& object, int rarity) {
 		rarities.push_back(getSum() + rarity);
-		objects.push_back(object);
+		objects.push_back(&object);
 	}
 
 	// Randomly select an element from the list, taking into account each pair's rarity value
-	T& selectRandomObject();
+	T* selectRandomObject();
 
 	// Reset the list
 	void clear() {
@@ -41,7 +41,7 @@ public:
 
 	// Insert a list of objects into the handler all at once
 	// For any element with index i in objList, it's rarity is rarityList[i]
-	void addList(std::vector<T> &objList, std::vector<int> &rarityList) {
+	void addList(std::vector<T*> &objList, std::vector<int> &rarityList) {
 		objects.insert(objects.end(), objList.begin(), objList.end());
 
 		for (int &rarity : rarityList) {
@@ -54,7 +54,7 @@ public:
 // Select a random integer, and take the element with the 
 // smallest rarity subsequence sum that is >= the chosen number
 template<class T>
-T & RarityHandler<T>::selectRandomObject()
+T *RarityHandler<T>::selectRandomObject()
 {
 	// Select a random number to choose an element based on
 	int rarity = randint(1, getSum());
