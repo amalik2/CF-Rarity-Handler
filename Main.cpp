@@ -11,37 +11,38 @@ int main() {
 
 	std::vector<double> elementList;
 	std::vector<int> rarities;
-	
-	float counts[100];
+	std::vector<int> counts;
+
 	for (int i = 1; i <= elements; i++) {
 		elementList.push_back(i);
 		rarities.push_back(i);
-		counts[i - 1] = 0;
+		counts.push_back(0);
 	}
 
 	rh.addList(elementList, rarities);
 
 	for (int x = 0; x < tries; x++) {
 		int idx = rh.selectRandomObject();
-		counts[idx]++;
+		counts[idx - 1]++;
 	}
 
-	std::cout << "1: " << (counts[1] / tries) * 100 << " 5: " << 100 * counts[4] / tries << std::endl;
+	std::cout << "1: " << (counts[0] / (float)tries) * 100 << " 5: " << 100 * counts[4] / (float)tries << std::endl;
 
 	rh.clear();
+	counts.clear();
 
 	for (int i = 1; i <= elements; i++) {
 		double value = i;
 		rh.addObject(value, i);
-		counts[i - 1] = 0;
+		counts.push_back(0);
 	}
 
 	for (int x = 0; x < tries; x++) {
 		int idx = rh.selectRandomObject();
-		counts[idx]++;
+		counts[idx - 1]++;
 	}
 
-	std::cout << "1: " << (counts[1] / tries) * 100 << " 5: " << 100 * counts[4] / tries << std::endl;
+	std::cout << "1: " << (counts[0] / (float)tries) * 100 << " 5: " << 100 * counts[4] / (float)tries << std::endl;
 
 	return 0;
 }
