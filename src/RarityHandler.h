@@ -57,14 +57,14 @@ template<class T>
 T & RarityHandler<T>::selectRandomObject()
 {
 	// Select a random number to choose an element based on
-	int rarity = randint(1, getSum());
+	int rarity = RandomFunctions::randint(1, getSum());
 
 	for (size_t i = 0; i < rarities.size(); i++) {
 
 		// Smallest element where sum of individual rarities of elements[0...i] >= rarity
 		if (rarities[i] >= rarity) {
 			return objects[i];
-		} 
+		}
 		else if (rarities[i] < rarity) {
 			// If this element's value is equal to the same value as the last element, there exists no element with a larger rarity
 			if (rarities[i] == rarities.back()) {
